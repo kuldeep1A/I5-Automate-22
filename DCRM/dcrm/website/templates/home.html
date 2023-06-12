@@ -4,7 +4,21 @@
 {% block content %}
 <div class="col-md-6 offset-md-3"> 
     {% if user.is_authenticated %}
-    <h1>Hello Django CRM</h1>
+    <h1>Records...</h1>
+    {% if records %}
+        {% for record in records %}
+            {{ record.id }}
+            {{ record.first_name }}
+            {{ record.last_name }}
+            {{ record.email }}
+            {{ record.phone }}
+            {{ record.address }}
+            {{ record.city }}
+            {{ record.state }}
+            {{ record.zipcode }}
+            {{ record.create_at }}<br/><br/>
+        {% endfor %}
+    {% endif %}
     {% else %}
     <h1>Login</h1>
     <form method="POST" action="{% url 'home' %}">
