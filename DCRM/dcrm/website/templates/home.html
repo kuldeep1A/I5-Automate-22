@@ -21,8 +21,7 @@
         <tbody>
         {% for record in records %}
         <tr>
-        
-            <td><a href="{% url 'record' record.id %}">{{ record.id }}</a></td>
+            <td><a href="{% url 'record' record.id %}">{{ record.id }}</td>
             <td>{{ record.first_name }}</td>
             <td>{{ record.last_name }}</td>
             <td>{{ record.email }}</td>
