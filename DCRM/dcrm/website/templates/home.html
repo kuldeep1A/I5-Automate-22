@@ -2,39 +2,60 @@
 
 
 {% block content %}
-<div class="col-md-6 offset-md-3"> 
     {% if user.is_authenticated %}
     <h1>Records...</h1>
     {% if records %}
+    <table class="table table-striped table-hover table-bordered">
+        <thead class="table-success">
+            <th scop="col">Id</th>
+            <th scop="col">First Name</th>
+            <th scop="col">Last Name</th>
+            <th scop="col">Email</th>
+            <th scop="col">Phone</th>
+            <th scop="col">Address</th>
+            <th scop="col">City</th>
+            <th scop="col">State</th>
+            <th scop="col">ZipCode</th>
+            <th scop="col">Create At</th>
+        </thead>
+        <tbody>
         {% for record in records %}
-            {{ record.id }}
-            {{ record.first_name }}
-            {{ record.last_name }}
-            {{ record.email }}
-            {{ record.phone }}
-            {{ record.address }}
-            {{ record.city }}
-            {{ record.state }}
-            {{ record.zipcode }}
-            {{ record.create_at }}<br/><br/>
+        <tr>
+        
+            <td>{{ record.id }}</td>
+            <td>{{ record.first_name }}</td>
+            <td>{{ record.last_name }}</td>
+            <td>{{ record.email }}</td>
+            <td>{{ record.phone }}</td>
+            <td>{{ record.address }}</td>
+            <td>{{ record.city }}</td>
+            <td>{{ record.state }}</td>
+            <td>{{ record.zipcode }}</td>
+            <td>{{ record.create_at }}</td>
+        </tr>
+       
         {% endfor %}
+        </tbody>
+    </table>
     {% endif %}
     {% else %}
-    <h1>Login</h1>
-    <form method="POST" action="{% url 'home' %}">
-        {% csrf_token %}
-        <div class="mb-3">
-            <input type="text" class="form-control" name='username' placeholder='Username' required>
-        </div>
-        <br/>
-        <div class="mb-3">
-            
-            <input type="password" class="form-control" name='password' placeholder='Password' required>
-        </div>
-        <br/>
-        <button type="submit" class="btn btn-secondary">Login</button>
-    </form>
+    
+    <div class="col-md-6 offset-md-3"> 
+        <h1>Login</h1>
+        <form method="POST" action="{% url 'home' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <input type="text" class="form-control" name='username' placeholder='Username' required>
+            </div>
+            <br/>
+            <div class="mb-3">
+                
+                <input type="password" class="form-control" name='password' placeholder='Password' required>
+            </div>
+            <br/>
+            <button type="submit" class="btn btn-secondary">Login</button>
+        </form>
+    </div>
     {% endif %}
-</div>
 
 {% endblock  %}
