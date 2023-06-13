@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import SignupForm
+from .forms import SignupForm, AddRecordForm
 from .models import Records
 
 
@@ -59,9 +58,22 @@ def customer_records(request, pk):
         return redirect('home')
 
 
-@login_required
 def delete_records(request, pk):
-    delete_it = Records.objects.get(id=pk)
-    delete_it.delete()
-    messages.success(request, "Record Deleted Successfully...")
-    return redirect('home')
+    if request.user.is_authenticated:
+        delete_it = Records.objects.get(id=pk)
+        delete_it.delete()
+        messages.success(request, "Record Deleted Successfully...")
+        return redirect('home')
+
+
+def add_records(request):
+    form = AddRecordForm(request.POST or None)
+    if request.user.is_authenticated:
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Record Added...")
+            return redirect('home')
+        return render(request, 'add_record.html', {'form': form})
+    else:
+        messages.success(request, "You Must Be Logged In..")
+        return redirect('home')
