@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import SignupForm
 from .models import Records
@@ -56,3 +57,11 @@ def customer_records(request, pk):
     else:
         messages.success(request, "You Must Been Logged In To View That Page..")
         return redirect('home')
+
+
+@login_required
+def delete_records(request, pk):
+    delete_it = Records.objects.get(id=pk)
+    delete_it.delete()
+    messages.success(request, "Record Deleted Successfully...")
+    return redirect('home')
